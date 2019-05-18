@@ -4,9 +4,16 @@
 sudo apt-get -y update
 sudo apt-get -y install ruby
 sudo apt-get -y install wget
-sudo apt-get -y install nginx
-sudo service nginx start
 sudo apt -y install awscli
+
+# Install and run puppet client
+wget https://apt.puppet.com/puppet6-release-xenial.deb
+sudo dpkg -i puppet6-release-xenial.deb
+sudo apt-get update
+sudo apt-get install puppet-agent
+sudo /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
+wget https://raw.githubusercontent.com/eboayue/aws-image-build/master/puppet/main.pp
+sudo /opt/puppetlabs/bin/puppet apply main.pp
 
 # Put Twitch logo on Nginx home page
 cd /var/www/html/
@@ -18,11 +25,6 @@ sudo mkdir /var/log/essence
 sudo chmod 766 /var/log/essence
 cd /etc/nginx/
 sudo curl -O https://raw.githubusercontent.com/eboayue/terraform-aws/master/nginx.conf
-
-#Create essence user and group
-sudo useradd -m essence
-sudo groupadd essence
-sudo usermod -g essence essence
 
 # Backup sudoers file and edit the backup
 sudo cp /etc/sudoers /tmp/sudoers.bak
