@@ -1,5 +1,6 @@
-package { 'nginx-install':
-  ensure => 'installed'
+package { 'nginx':
+  ensure   => 'installed',
+  provider => 'apt'
 }
 
 exec { 'nginx-run':
@@ -7,11 +8,11 @@ exec { 'nginx-run':
   provider => 'shell'
 }
 
-group { 'group-create':
+group { 'essence':
   ensure => 'present'
 }
 
-user { 'user-create':
+user { 'essence':
   ensure => 'present',
-  groups => 'web'
+  groups => 'essence'
 }
