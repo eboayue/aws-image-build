@@ -20,6 +20,10 @@ cd /var/www/html/
 sudo aws s3 cp s3://twitchlogo/Twitch_logo.jpg .
 sudo sed -i '14 a <img src="TwitchLogo.png" alt="Twitch.tv Logo">' index.nginx-debian.html
 
+# Set up /twitch redirect
+cd /etc/nginx/sites-available/
+sudo curl -O https://raw.githubusercontent.com/eboayue/aws-image-build/master/default
+
 # Change access log path to /var/log/essence
 sudo mkdir /var/log/essence
 sudo chmod 766 /var/log/essence
